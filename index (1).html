@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para mi hermosa Suleica ❤️</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        love: '#e63946',
+                        darkLove: '#900c3f',
+                        softPink: '#ffccd5',
+                        paper: '#fdfbf7', 
+                        textMain: '#4a4a4a'
+                    },
+                    fontFamily: {
+                        hand: ['Dancing Script', 'cursive'],
+                        serif: ['Lora', 'serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #1a0b12; 
+            overflow: hidden; 
+            overscroll-behavior: none;
+            touch-action: manipulation;
+            background-image: radial-gradient(circle at center, #4a0e22 0%, #1a0b12 100%);
+        }
+
+        /* Corazones borrosos de fondo (estilo bokeh) */
+        .bokeh-heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.15);
+            font-size: 5rem;
+            filter: blur(8px);
+            animation: float-up 15s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-20vh) scale(1.5) rotate(45deg); opacity: 0; }
+        }
+
+        /* El Sobre */
+        .envelope-container {
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.5s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .envelope-container:active { transform: scale(0.95); }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #d90429;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            z-index: 10;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ef233c;
+            z-index: 11;
+            transform-origin: top;
+            transition: transform 0.6s 0.4s ease-in-out;
+        }
+        
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .wax-seal {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            border-radius: 50%;
+            z-index: 12;
+            top: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-size: 28px;
+            transition: opacity 0.4s;
+            border: 2px solid #daa520;
+        }
+        
+        .envelope.open .wax-seal {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* La Carta (100% Optimizada para Móviles) */
+        .letter-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 95%;
+            max-width: 450px;
+            max-height: 90vh; /* Evita que se salga de la pantalla */
+            background-color: #fdfbf7;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border-radius: 15px;
+            padding: 25px 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto; /* Permite scroll interno si la pantalla es muy pequeña */
+            overflow-x: hidden;
+            z-index: 20;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Estilo para la barra de scroll en móviles */
+        .letter-card::-webkit-scrollbar, .celebration-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .letter-card::-webkit-scrollbar-track, .celebration-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .letter-card::-webkit-scrollbar-thumb, .celebration-scroll::-webkit-scrollbar-thumb {
+            background-color: #ffb3c6;
+            border-radius: 10px;
+        }
+
+        .letter-card.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Árbol y animaciones */
+        .tree-container {
+            position: relative;
+            width: 100%;
+            max-height: 250px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .heart-tree-img {
+            width: 100%;
+            height: 100%;
+            max-height: 250px;
+            filter: drop-shadow(0 8px 10px rgba(233, 30, 99, 0.15));
+        }
+
+        .falling-leaf {
+            position: absolute;
+            animation: falling 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes falling {
+            0% { transform: translate(0, 0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translate(-30px, 150px) rotate(45deg) scale(0.5); opacity: 0; }
+        }
+
+        /* Contador responsivo */
+        .timer-text span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #900c3f;
+            margin: 0 2px;
+            font-family: 'Nunito', sans-serif;
+        }
+        .timer-text small {
+            font-size: 0.7rem;
+            color: #666;
+            margin-right: 6px;
+            text-transform: lowercase;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* Toast Error */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            max-width: 90%;
+            background: linear-gradient(to right, #e63946, #d90429);
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 15px 20px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff4d6d, #e63946);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        /* Pop-up de la Cartita de Amor (Centrado) */
+        #lovePhraseModal {
+            visibility: hidden;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 92%;
+            max-width: 400px;
+            background-color: #fdfbf7;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 2px solid #ffccd5;
+            text-align: center;
+        }
+
+        #lovePhraseModal.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bokehContainer"></div>
+    <div id="toast">Mensaje de error aquí</div>
+
+    <div class="flex items-center justify-center h-screen w-full" id="envelopeScreen">
+        <div class="envelope-container" onclick="openLetter()" ontouchstart="openLetter()">
+            <div class="envelope" id="envelope">
+                <div class="wax-seal">❤️</div>
+                <div class="absolute bottom-5 text-white font-hand text-3xl tracking-widest shadow-sm">Para Suleica</div>
+            </div>
+            <p class="text-pink-200 text-center mt-10 font-body tracking-wider animate-pulse">Toca para abrir el sobre</p>
+        </div>
+    </div>
+
+    <div class="letter-card" id="letterCard">
+        <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-pink-400 via-red-400 to-pink-400"></div>
+        
+        <div class="space-y-4">
+            <h1 class="font-hand text-3xl sm:text-4xl text-darkLove font-bold text-center mt-2 mb-4">
+                Para mi hermosa Suleica
+            </h1>
+            
+            <div class="font-serif text-textMain text-base sm:text-lg leading-relaxed px-2 text-center">
+                <p class="mb-3">
+                    Si pudiera elegir un lugar seguro en este mundo, sería a tu lado.
+                </p>
+                <p class="mb-3">
+                    Cuanto más tiempo estoy contigo, más te amo. Eres mi chaparrita preciosa y mi mayor bendición.
+                </p>
+            </div>
+
+            <div class="tree-container" id="treeContainer">
+                <svg class="heart-tree-img" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M140,300 Q150,200 150,150" stroke="#5c3a21" stroke-width="18" fill="none" stroke-linecap="round"/>
+                    <path d="M150,180 Q120,130 100,100" stroke="#5c3a21" stroke-width="12" fill="none" stroke-linecap="round"/>
+                    <path d="M150,200 Q180,140 200,110" stroke="#5c3a21" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <path d="M125,140 Q100,110 90,90" stroke="#5c3a21" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <path d="M170,150 Q190,120 210,100" stroke="#5c3a21" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    
+                    <defs>
+                        <path id="h-path" d="M0,0 q-5,-5 -10,0 q-5,5 0,10 l10,10 l10,-10 q5,-5 0,-10 q-5,-5 -10,0" />
+                    </defs>
+
+                    <g id="treeCanopy"></g>
+                </svg>
+            </div>
+
+            <div class="text-center w-full mt-4 pt-4 border-t border-gray-200">
+                <p class="font-serif text-gray-500 italic mb-2 text-sm sm:text-base">Mi amor por ti comenzó hace...</p>
+                <div class="timer-text flex flex-wrap justify-center items-baseline" id="counter">
+                    Calculando...
+                </div>
+                <p class="font-serif text-gray-500 italic mt-2 text-sm sm:text-base">Desde nuestro primer beso 2 de mayo</p>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-4 pb-2">
+            <h2 class="font-hand text-3xl sm:text-4xl text-darkLove text-center mb-6">¿Quieres ser mi San Valentín?</h2>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 w-full" id="buttonsContainer">
+                
+                <button id="btnYes" onclick="acceptProposal()" 
+                    class="btn-yes text-white font-bold py-3 px-10 rounded-full transition-transform hover:scale-105 z-10 w-full sm:w-auto text-xl">
+                    ¡Sí, quiero!
+                </button>
+                
+                <button id="btnNo" onclick="denyProposal()"
+                    class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-10 rounded-full shadow-md transition-transform hover:scale-105 z-10 w-full sm:w-auto text-xl">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="celebrationScreen" class="fixed inset-0 bg-pink-50 hidden z-50 overflow-y-auto celebration-scroll">
+        <div class="min-h-screen flex flex-col items-center justify-center p-4 py-12">
+            
+            <h1 class="font-hand text-5xl sm:text-6xl text-darkLove mb-2 animate-bounce">¡Te Amo! ❤️</h1>
+            <p class="font-serif text-xl sm:text-2xl text-gray-800 italic mb-6">Eres lo mejor de mi vida, mi niña.</p>
+            
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Besos" class="rounded-2xl shadow-xl w-56 sm:w-64 mb-10">
+
+            <div class="bg-white/70 backdrop-blur-sm border-2 border-pink-200 p-6 sm:p-8 rounded-3xl shadow-xl max-w-lg w-full text-center">
+                <h3 class="font-hand text-4xl text-darkLove mb-4">Un reto con mucho amor...</h3>
+                <p class="font-serif text-gray-700 text-base sm:text-lg leading-relaxed italic mb-8">
+                    “Suleica, elegí estas palabras pensando en ti… para que, cuando necesites sentir lo mucho que te amo o cuando alguna duda quiera aparecer, encuentres aquí un pedacito de mi corazón en cada una. Te dejo un reto: será un poco difícil encontrar alguna repetida, pero no es imposible… y si lo logras en menos de cinco minutos, te debo la cena… y después, todo lo que quieras. 💌”
+                </p>
+                <button onclick="readLoveNote()" 
+                    class="bg-gradient-to-r from-pink-400 to-red-400 hover:from-pink-500 hover:to-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform duration-300 hover:scale-105 whitespace-nowrap text-lg font-body w-full sm:w-auto">
+                    Leer una cartita de amor
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="lovePhraseModal">
+        <h3 class="font-hand text-4xl text-blue-600 mb-6 text-center">(Para mi princesa Suleica)</h3>
+        <p id="phraseText" class="font-serif text-textMain text-lg px-2 leading-relaxed text-center mb-10 italic">Cargando frase...</p>
+        <div class="flex justify-center mt-8">
+            <button onclick="closeLoveNote()" 
+                class="bg-darkLove hover:bg-black text-white font-bold py-2 px-6 rounded-full font-body text-base transition-transform hover:scale-105">
+                Guardar en el corazón 💌
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. GENERADOR DEL ÁRBOL ---
+        function generateLushTree() {
+            const canopy = document.getElementById('treeCanopy');
+            const container = document.getElementById('treeContainer');
+            
+            const colors = ['#d90429', '#ef233c', '#ff4d6d', '#ff7096', '#ffb3c6', '#c9184a'];
+            const numHearts = 220; 
+
+            const centerX = 150;
+            const centerY = 100;
+
+            for(let i = 0; i < numHearts; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.sqrt(Math.random()) * 85; 
+                
+                const x = centerX + Math.cos(angle) * radius * 1.3;
+                const y = centerY + Math.sin(angle) * radius * 0.9;
+                
+                const size = Math.random() * 0.8 + 0.5; 
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const rotation = Math.random() * 90 - 45; 
+                
+                const heart = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                heart.setAttribute("href", "#h-path");
+                heart.setAttribute("fill", color);
+                heart.setAttribute("transform", `translate(${x}, ${y}) scale(${size}) rotate(${rotation})`);
+                
+                heart.setAttribute("opacity", Math.random() * 0.2 + 0.8);
+                canopy.appendChild(heart);
+
+                if(i < 12) {
+                    createFallingLeaf(container, x, y, color, size);
+                }
+            }
+        }
+
+        function createFallingLeaf(container, startX, startY, color, size) {
+            const leaf = document.createElement('div');
+            leaf.innerHTML = `
+                <svg width="20" height="20" viewBox="-15 -15 30 30">
+                    <use href="#h-path" fill="${color}" transform="scale(${size * 0.8})"/>
+                </svg>`;
+            leaf.className = 'falling-leaf';
+            leaf.style.left = `calc(50% - 150px + ${startX}px)`;
+            leaf.style.top = `${startY}px`;
+            leaf.style.animationDelay = `${Math.random() * 5}s`;
+            leaf.style.animationDuration = `${3 + Math.random() * 3}s`;
+            container.appendChild(leaf);
+        }
+
+        generateLushTree();
+
+        // --- 2. CONFIGURACIÓN DEL CONTADOR ---
+        const fechaInicio = new Date(2025, 4, 2, 0, 0, 0); // 2 de Mayo de 2025
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+            if (diferencia < 0) {
+                 document.getElementById('counter').innerHTML = "<span>¡Pronto celebraremos!</span>";
+                 return;
+            }
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            document.getElementById('counter').innerHTML = 
+                `<span>${dias}</span><small>días</small>` +
+                `<span>${horas < 10 ? '0'+horas : horas}</span><small>horas</small>` +
+                `<span>${minutos < 10 ? '0'+minutos : minutos}</span><small>minutos</small>` +
+                `<span>${segundos < 10 ? '0'+segundos : segundos}</span><small>segundos</small>`;
+        }
+        setInterval(actualizarContador, 1000);
+        actualizarContador();
+
+        // --- 3. ANIMACIÓN DEL SOBRE ---
+        let opened = false;
+        function openLetter() {
+            if (opened) return;
+            opened = true;
+            const envelope = document.getElementById('envelope');
+            const letterCard = document.getElementById('letterCard');
+            const envelopeScreen = document.getElementById('envelopeScreen');
+            
+            envelope.classList.add('open');
+            
+            setTimeout(() => {
+                envelopeScreen.style.opacity = '0';
+                setTimeout(() => {
+                    envelopeScreen.style.display = 'none';
+                    letterCard.classList.add('visible');
+                    createConfetti(30); 
+                }, 500);
+            }, 800);
+        }
+
+        // --- 4. LÓGICA DE BROMAS Y BOTONES ---
+        const frasesBroma = [
+            "Mi chaparrita, ¿estás segura? 🤨",
+            "Preciosa, ¡ese no es el botón! 🚫",
+            "Mi niña, piénsalo bien... 🥺",
+            "Mi amor... ¿a poco sí? 💔",
+            "Mmmmm no lo sé... 🤔",
+            "Creo que te equivocaste y pusiste NO 🤖",
+            "¿Perderás al amor de tu vida así de fácil? 😱",
+            "¡Anda mi niña bonita, di que sí! ❤️",
+            "Princesa elije bien la respuesta.",
+            "Por que me dices que no mi nena hermosa ?",
+            "Se que querías estar con tu familia pero yo quería estar a tu lado como una",
+            "No puedo creer que hayas elegido que no",
+            "Ya deja de bromear mi amor"
+        ];
+
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 5000); 
+        }
+
+        function denyProposal() {
+            const frase = frasesBroma[Math.floor(Math.random() * frasesBroma.length)];
+            showToast(frase);
+        }
+
+        // --- 5. LÓGICA DE LAS CARTITAS DE AMOR (469 Frases) ---
+        const lovingPhrases = [
+            "Desde que llegaste a mi vida, lloro un poco menos, me río un poco más y sonrío aún más, solo porque te tengo, mi vida es un lugar mejor.",
+            "Justo cuando creía que era imposible amar más, siento que cada día me enamoro más de ti y eso me encanta porque mi vida se llena de colores con tu presencia. Te amo.",
+            "Hay un millón de palabras para describir nuestro amor, pero comencemos con este: eterno. Mi amor por ti no se acabará ni en mil vidas, porque me enseñaste que mi vida eres tú.",
+            "Las palabras nunca pueden justificar el amor y la adoración que siento por ti. Eres la persona más increíble y hermosa del mundo, tanto por dentro como por fuera. Siempre estoy agradecido con Dios por enviarte a mi vida. ¡Que Dios nos bendiga para estar juntos así para siempre, mi amor!",
+            "Lo único que quiero en mi vida es tu presencia. Puede que no siempre exprese mis sentimientos, pero si me miras a los ojos, ¡verás allí un océano lleno de amor, respeto y cuidado solo para ti! Todo mi ser te pertenece para siempre.",
+            "Incluso si pudiera viajar por todo el universo buscando un novia perfecta, nunca podría encontrar a alguien como tú. Estás hecha de manera tan única por Dios solo para entrar en mi vida y hacerla maravillosa. ¡Te quiero mucho! Y hasta siempre te querré.",
+            "¿Sabes? Has cambiado completamente mi vida, en todos los sentidos, por dentro y por fuera. Cuando todo no estaba en mi mejor momento, entraste, mejoraste todo para mí y me cambiaste incondicionalmente con mucha positividad. Te amo mucho y si algún día tengo que sacrificar mi vida por ti, entonces posiblemente lo haga.",
+            "Te amo con todo mi corazón. En las buenas y en las malas hemos estado juntos y hemos luchado por la supervivencia de esta relación. Siempre estaré allí para ti. ¡Te amo bebé!",
+            "Mi amor por ti es, sin duda, lo único que nunca terminará. Me haces sentir lo mejor que he sentido, y siempre lo atesoraré. Haces mis sueños realidad y son lo mejor que Dios me ha dado. Siempre te amaré y que de eso no tengas la menor duda.",
+            "Ahora entiendo cómo se siente la felicidad. Eres tú y todo sobre ti; tu cara, voz suave, corazón amable y manos suaves y cálidas. Cariño, realmente lo digo en serio. Me haces tan feliz.",
+            "Nunca supe cómo era el verdadero amor hasta que te conocí. Me enseñaste a amar, a mostrar interés de cómo me siento, cómo cuidarme y cómo ser responsable. Ahora siento que tengo todo lo que necesito en la vida. Te amo, y las palabras nunca serán suficientes para agradecerte por todo lo que has hecho por mí.",
+            "Podemos estar a millas de distancia, pero nuestras almas están una al lado de la otra, así de fuerte es nuestro amor.",
+            "Tu amor es todo lo que me mantiene vivo y me hace sentir completo. ¡Te quiero!",
+            "No hay nada más hermoso que sentirte cerca y saber que me quieres.",
+            "Nuestro amor puede ser todo lo que queramos que sea.",
+            "Me diste tu presente y yo te doy el resto de mi vida.",
+            "Si vuelvo a nacer, quiero volver a ser tu compañero.",
+            "Te amo, porque sin querer cambiarme, me hiciste una mejor persona.",
+            "Cuando me siento mal, solo te imagino y todo se me pasa. Eres mi magia.",
+            "Estar contigo es la elección más fácil que he hecho, y tengo tanta suerte que puedo hacerlo todos los días.",
+            "Desearía que todos los días pudieras verte como yo te veo a ti. Porque te veo como absolutamente perfecta.",
+            "Eres mi primer pensamiento todas las mañanas y mi último pensamiento antes de irme a dormir.",
+            "En mi mente hay un millón de maneras para decirte te amo, pero cuando te veo mi mente solo se concentra en tu belleza. Te amo.",
+            "Amo quién eres, amo quién eras, amo en quién te estás convirtiendo.",
+            "Eres el mayor riesgo que he tomado. Y la mayor recompensa.",
+            "Para nosotros dos, el hogar no es un lugar. Es una persona, y finalmente estamos en casa.",
+            "Eres lo que siempre ha significado la belleza de la luna y el brillo del sol. Eres mi todo.",
+            "Eres la combination perfecta de amor, carisma, belleza y tranquilidad. Te quiero.",
+            "¿Te he dicho hoy que te amo? Porque te quiero mucho.",
+            "Hoy no puedo sacarte de mi mente.",
+            "Te amo con todo lo que tengo.",
+            "Si sé lo que es el amor, es gracias a ti.",
+            "Cuando te abrazo, nunca quiero dejarte ir.",
+            "Mi vida fue en blanco y negro hasta que entraste y agregaste color.",
+            "No puedo esperar para volver a casa esta noche.",
+            "Tu alma vive en mi corazón.",
+            "El alma es una sola alma que habita en dos cuerpos.",
+            "Cada vez que pienso en ti, mi corazón baila.",
+            "Cuando hablo contigo, mi alma es feliz.",
+            "Tu amor es una droga, y nunca quiero recuperarme de ella.",
+            "¡Te amaba, te amo y te amaré por siempre!",
+            "Me he enamorado muchas veces. ¡Pero cada vez, fue contigo!",
+            "Si me pagan por amarte, ¡ya sería millonario!",
+            "Mi vida está llena de felicidad por tu culpa.",
+            "Despertar a tu lado todos los días no es más que una bendición pura. Gracias por ser mi esposa.",
+            "Espero que tengas un día tan hermoso como tú.",
+            "Amanecí pensando en ti. Esperando que tu día sea tan maravilloso como tú.",
+            "Mi mañana no puede comenzar sin hacerte saber lo increíble que eres. Que tengas un día espléndido por delante.",
+            "Buenos días a la persona más guapa del universo. ¡Te quiero!",
+            "La sonrisa más grande en mi rostro siempre ha sido por ti. Buenos días mi amor.",
+            "Estoy enviando mucho amor esta mañana, cariño. Disfruta tu día.",
+            "Desearía estar en tus brazos esta mañana porque me sentiré seguro y cálido.",
+            "Te deseo un día lleno de alegría y mucho amor. Te quiero.",
+            "Espero que hayas tenido una gran noche, amor. Desearía estar cerca para darte besos por todo el cuerpo.",
+            "Quiero verte, bebé. Buenos días y disfruta tu día.",
+            "Esto es para recordarte que nadie te amará como yo. Buenos días, querida.",
+            "Gracias por inspirarme a ser una mejor persona. Buenos días, cariño.",
+            "Buenos días a la única persona que me ama por lo que soy.",
+            "Hoy derramé una lágrima al mar por tu ausencia. El día que el mar se seque, ese día acaba mi amor por ti.",
+            "Por cada segundo de cada día que estés fuera, sé que todo valdrá la pena algún día.",
+            "Aunque estemos lejos, siempre vives en mi corazón.",
+            "Si el mundo entero se derrumbara a mi alrededor, yo seguiría de pie, porque te tengo a ti, y contigo cualquier tormenta se convierte en el lugar más seguro del universo.",
+            "No solo te extraño, te necesito.",
+            "Nuestro amor creció con el tiempo y creo que también puede cubrir distancias.",
+            "Actualmente, estoy enamorado de alguien que vive en mi futuro.",
+            "Aunque estás a millas de distancia, tu voz es lo más reconfortante que escucho en mi día.",
+            "Todas las noches, antes de irme a dormir, te imagino a mi lado.",
+            "Cada abrazo, cada beso, cada palabra vive en mi alma. Te extraño.",
+            "Nuestro amor siempre será mayor que la distancia.",
+            "Si nunca nos hubiéramos separado, nunca sabríamos cuán fuerte podría ser nuestro amor.",
+            "Mi amor por ti hace que el tiempo sea corto. Te voy a esperar.",
+            "Quiérete siempre en primer plano; nunca te dejes para después.",
+            "Nunca has sido, eres ni serás una opción. Siempre serás para mí una prioridad.",
+            "El amor que te das a ti misma es el más valioso del mundo.",
+            "Las mariposillas en el estómago dicen más que las palabras.",
+            "Tu sonrisa me reconforta e ilumina mis días grises.",
+            "Tus brazos son mi lugar favorito en el mundo.",
+            "¿Mi plan favorito? Cualquiera contigo.",
+            "El amor que siento por ti es eterno.",
+            "Mi corazón está alegre y feliz desde que te conocí.",
+            "Vamos a comernos el mundo sin mirar atrás, yo invito.",
+            "Me bastan 8 letras y 2 palabras para expresar lo que siento por ti.",
+            "Mi felicidad tiene un solo nombre desde que te conocí.",
+            "Eres mi lugar favorito.",
+            "Te quiero sin razón ni medida.",
+            "Contigo, siempre es mejor.",
+            "Eres la calma en mi tormenta.",
+            "Mi felicidad eres tú.",
+            "Eres mi más bonita casualidad.",
+            "Te elijo hoy, mañana y siempre.",
+            "Juntos somos invencibles.",
+            "Mi corazón te pertenece.",
+            "Te amo en cada rincón de mi alma.",
+            "Sin ti, mi mundo está incompleto.",
+            "Me haces mejor cada día.",
+            "No hay nadie como tú.",
+            "Te pienso más de lo que crees.",
+            "Tú y yo, un solo latido.",
+            "Cada día contigo es un regalo.",
+            "Te llevo en mi piel y en mi alma.",
+            "Mi sonrisa te pertenece.",
+            "A tu lado, todo es perfecto.",
+            "Siempre serás mi mejor aventura.",
+            "Te quiero con todas tus virtudes y defectos.",
+            "Mi corazón late más deprisa desde que te conocí. Me complementas.",
+            "Mi casa siempre será tu casa.",
+            "No sé qué has hecho en mí que siempre estoy deseando verte.",
+            "Te amo sin medida, sin reglas ni límites. Te amo de forma incondicional.",
+            "Te quiero más que ayer, pero menos que mañana.",
+            "¿Estás preparado/a para el viaje de nuestras vidas? ¡Solo acaba de empezar!",
+            "Cuando quiero algo voy con todo a por ello. Y eso es lo que me ocurrió contigo.",
+            "A mí se me cae el mundo cuando te veo.",
+            "Puede que yo me pasé el día sonriendo, pero el motivo eres tú.",
+            "Te cruzaste por casualidad en mi camino y yo ya perdí el norte.",
+            "Desconocía el verdadero significado del amor hasta que te encontré.",
+            "En tus ojos encuentro la luz que ilumina mi vida.",
+            "Tu risa es la melodía que alegra mis días.",
+            "Si tuviera que elegir un lugar en el mundo, sería en tus brazos.",
+            "Te amo como las estrellas aman la noche, iluminando mi oscuridad.",
+            "No necesito nada más cuando estás a mi lado.",
+            "Nuestro amor es como un jardín en constante florecimiento.",
+            "Eres mi refugio en un mundo lleno de caos.",
+            "El amor que siento por ti no tiene fin, ni fronteras.",
+            "Eres mi poema favorito, cada palabra en ti es perfecta.",
+            "Contigo, los momentos más simples se vuelven extraordinarios.",
+            "Amar es fácil cuando la otra persona eres tú.",
+            "Mi corazón siempre encuentra su hogar en el tuyo.",
+            "Eres el sol que ilumina mis días más oscuros.",
+            "Cada minuto a tu lado es un tesoro que atesoro.",
+            "Eres mi sueño hecho realidad, todos los días.",
+            "Amarte es como respirar, algo que hago sin pensar.",
+            "En ti encontré lo que nunca supe que buscaba.",
+            "Si pudiera congelar el tiempo, lo haría en cada momento contigo.",
+            "Eres la razón por la que creo en la magia del amor.",
+            "Nuestro amor es un viaje sin destino, pero no importa mientras estemos juntos.",
+            "Eres mi lugar favorito donde siempre quiero volver.",
+            "Desde que estás en mi vida, todo tiene un brillo diferente.",
+            "Cuida tu corazón como cuidas tus sueños: con paciencia, cariño y valentía.",
+            "Lo que sientes también importa; no lo escondas, abrázalo.",
+            "Tu luz es tan grande que ilumina incluso los días que parecen nublados.",
+            "No aceptes menos de lo que mereces; tu alma sabe bien cuánto vale.",
+            "El amor bonito empieza en ti y se comparte con quien sabe cuidarlo.",
+            "Eres magia en un mundo que a veces olvida brillar.",
+            "Lo que te hace vibrar, te hace vivir; no renuncies a eso jamás.",
+            "El cariño que te das es el puente hacia todo lo bueno que llegará.",
+            "Eres la suma de pequeñas maravillas que te hacen única.",
+            "Cuando te eliges a ti, el universo también lo hace.",
+            "Tu sonrisa es el regalo que más disfruto cada día.",
+            "No sé qué hice para merecerte, pero prometo cuidarte siempre.",
+            "A tu lado entendí que el amor no se busca, se encuentra.",
+            "Eres mi presente feliz y mi futuro soñado.",
+            "Contigo todo es mejor.",
+            "Eres mi persona favorita.",
+            "Mi hogar eres tú.",
+            "Eres la calma que mi alma siempre buscó.",
+            "Si tú estás, todo tiene sentido.",
+            "Te quiero no solo por cómo eres, sino por cómo me haces ser.",
+            "Desde que te conocí, supe que los momentos a tu lado serían mi lugar favorito.",
+            "Tu sonrisa tiene el poder de iluminar incluso mis días más grises.",
+            "Si pudiera guardar un instante para siempre, sería cualquiera a tu lado.",
+            "En tus ojos encuentro la calma que mi alma siempre buscó.",
+            "Contigo, todo lo sencillo se vuelve extraordinario.",
+            "Cada palabra tuya es un pequeño tesoro que guardo en el corazón.",
+            "Amarte no es una elección; es una necesidad que disfruto cada día.",
+            "Eres mi pensamiento favorito, mi sonrisa constante y mi alegría infinita.",
+            "Si el mundo se detuviera, querría que fuese solo para seguir mirándote.",
+            "Tu voz tiene la magia de hacer que todo lo malo desaparezca.",
+            "Cada día a tu lado me recuerda que el amor verdadero sí existe.",
+            "Si pudiera escribir mi felicidad, tu nombre sería el protagonista.",
+            "Tu presencia transforma lo cotidiano en algo memorable.",
+            "Amarte es la aventura más bonita que jamás podría imaginar.",
+            "Quisiera ser tu abrazo cuando nadie más pueda consolarte.",
+            "Contigo aprendí que el amor no se busca, se reconoce.",
+            "Tu risa es la melodía que quiero escuchar siempre.",
+            "Cada momento contigo es un capítulo hermoso de mi vida.",
+            "Amarte es sencillo porque cada detalle tuyo me hace querer más.",
+            "Si pudiera pedir un deseo cada día, sería pasar mi vida a tu lado.",
+            "Eres mi lugar seguro y mi alegría diaria.",
+            "Cada día contigo se siente como un regalo que nunca quiero dejar de abrir.",
+            "Tu abrazo es mi refugio favorito.",
+            "Amarte es la cosa más fácil y bonita que he hecho en la vida.",
+            "Contigo, todo tiene más sentido y más color.",
+            "Tu sonrisa ilumina incluso los días más grises.",
+            "Gracias por ser mi compañero, mi amiga y mi amor en uno.",
+            "Cada momento a tu lado se convierte en mi recuerdo favorito.",
+            "Me encanta cómo haces que lo simple se sienta especial.",
+            "Eres mi pensamiento feliz antes de dormir y mi primera alegría al despertar.",
+            "Tu amor me hace sentir completo y querida cada día.",
+            "No necesito nada más cuando estoy contigo.",
+            "Gracias por llenar mi vida de ternura y risas.",
+            "Me enamoro de ti una y otra vez, incluso en los días normales.",
+            "Tu corazón es mi lugar favorito en el mundo.",
+            "Contigo descubrí que el amor no duele, el amor cuida.",
+            "Eres mi paz en días de caos, y mi risa en días de rutina.",
+            "Hay mil formas de amar, pero la mía siempre termina en ti.",
+            "Mi amor no es de cuento, es de verdad: imperfecto, profundo y real.",
+            "El amor no me salvó, pero me recordó que merezco ser amada bonito.",
+            "Gracias por ser esa persona con la que el mundo se siente un poquito menos pesado.",
+            "La razón por la que sonrío todos los días eres tú.",
+            "Gracias por estar todos los días, incluso en los más grises.",
+            "No me imagino una vida sin ti.",
+            "Eres mi mejor amiga, mi confidente y mi mayor apoyo.",
+            "Me encanta despertarme por la mañana y verte a ti a mi lado.",
+            "Eres mi mayor suerte en esta vida.",
+            "Tengo ganas de todo contigo.",
+            "Buscándome a mí mismo, te encontré a ti y lo conseguí todo.",
+            "Con tal de ir contigo, el destino es lo de menos.",
+            "Desde que me robaste el corazón soy otra persona.",
+            "Si pudiera elegir entre todas las personas del mundo, siempre te elegiría a ti.",
+            "Contigo entendí lo que significa ser verdaderamente amado.",
+            "Eres esa persona que ilumina mi mundo con una simple sonrisa.",
+            "Todo lo bueno en mi vida comienza contigo.",
+            "Eres el pedazo de cielo que me hace sentir en paz.",
+            "Cada día contigo es una bendición que no merezco.",
+            "Eres esa chispa que enciende mi corazón.",
+            "No sé cómo lo haces, pero siempre sabes cómo hacerme sonreír.",
+            "Eres la melodía que acompaña cada uno de mis pensamientos.",
+            "Gracias por ser el capítulo más bonito de mi vida.",
+            "Contigo aprendí que el amor verdadero es posible.",
+            "Eres la razón por la que mi corazón sigue latiendo.",
+            "Todo lo bueno que tengo lo encuentro en ti.",
+            "No importa dónde esté, siempre estaré contigo en mis pensamientos.",
+            "Tu amor me hace sentir que puedo conquistar el mundo.",
+            "Eres la persona que siempre soñé, y mucho más.",
+            "En ti encontré mi hogar, mi paz y mi felicidad.",
+            "Me haces creer que el amor es la fuerza más poderosa del universo.",
+            "Eres mi mejor historia, la más bonita que jamás escribiré.",
+            "Cada segundo contigo es un regalo que no quiero desperdiciar.",
+            "Eres mi razón de ser y mi mayor alegría.",
+            "Desde que llegaste, mi corazón late distinto… más lento, más fuerte, más tú.",
+            "No eres perfecto, y aun así, eres exactamente lo que mi alma eligió.",
+            "Amarte es como respirar: no lo pienso, simplemente sucede.",
+            "No prometo siempre estar bien, pero sí estar contigo, incluso cuando no lo esté.",
+            "Ni en mis mejores sueños pensé que encontraría a alguien como tú.",
+            "Aunque el momento no sea ahora y si estás dispuesta a intentarlo, te esperaré.",
+            "Contigo descubrí lo que es la felicidad y aprendí a amar incondicionalmente.",
+            "¿Me prometes toda una vida juntos?",
+            "Eres el amor de todas mis mañanas, de todas mis noches y mis tardes. Te quiero.",
+            "Eres el faro que ilumina mi camino y quien me hace feliz cuando más lo necesito.",
+            "Mi felicidad se justifica con un motivo: tú.",
+            "Desde que te vi supe que ibas a ser el amor de mi vida.",
+            "Me levanto cada día y en lo primero que pienso es en ti.",
+            "Juntos hemos construido un amor que durará para siempre.",
+            "Prometo estar a tu lado hoy, mañana y siempre.",
+            "Nuestro amor es un pacto eterno entre dos almas.",
+            "No importa cuántos años pasen, siempre te amaré como el primer día.",
+            "Eres mi amor eterno, la razón de mi felicidad.",
+            "Lo que siento por ti no tiene fecha de caducidad.",
+            "Te amaré por todas las vidas que nos toque vivir.",
+            "Mi amor por ti es tan infinito como el cielo.",
+            "No necesito prometerte el cielo, porque te tengo a ti.",
+            "Te amo más con cada día que pasa.",
+            "Eres el amor de mi vida y lo serás para siempre.",
+            "Pase lo que pase, siempre te elegiré a ti.",
+            "Contigo quiero envejecer, reír, soñar y amar.",
+            "Te prometo que cada día será un nuevo comienzo a tu lado.",
+            "Mi amor por ti es tan fuerte que trasciende el tiempo y el espacio.",
+            "No hay fin para el amor que siento por ti, es eterno.",
+            "Envejecer contigo es mi mayor sueño.",
+            "Este amor que hemos construido durará más allá de nuestras vidas.",
+            "Siempre serás mi \"para siempre\".",
+            "Te amaré en esta vida y en la siguiente.",
+            "Si ves que estoy en las nubes, es porque estoy pensando en ti.",
+            "Si volviera a nacer, intentaría encontrarte mucho antes.",
+            "Tú eres la historia de amor más bonita de mi vida.",
+            "Mi felicidad tiene una explicación y esa eres tú.",
+            "Intento irme a dormir pronto para soñarte a tiempo.",
+            "Mi destino favorito es donde estés tú.",
+            "El amor nos da la felicidad.",
+            "Si no tardas mucho, te espero toda la vida.",
+            "Todo es más claro cuando estás enamorado.",
+            "Amarte es como entender el infinito, algo que nunca termina.",
+            "El amor que siento por ti es un abismo del cual nunca quiero salir.",
+            "En tus ojos encontré todas las respuestas que buscaba en el mundo.",
+            "No hay palabras suficientes para describir lo que siento por ti.",
+            "Eres la calma en la tormenta que es mi vida.",
+            "Amarte es mi forma de tocar lo divino.",
+            "Cada parte de mi alma te pertenece.",
+            "Si el amor es un viaje, entonces el destino eres tú.",
+            "Amarte no me hace menos mujer, me hace más fuerte, más libre, más yo.",
+            "Mi amor por ti no necesita promesas, solo momentos reales.",
+            "Contigo descubrí que el amor no se trata de necesitar, sino de elegir cada día.",
+            "Me enamoré de tu forma de mirarme, como si en mí estuviera todo lo que buscabas.",
+            "Amar también es un acto de valentía, y yo soy valiente contigo.",
+            "El amor verdadero no te encierra, te abre las alas.",
+            "Te elijo con mis dudas, mis sueños y mis días imperfectos. Porque el amor real también es humano.",
+            "Eres mi razón para creer en lo imposible.",
+            "Mi amor por ti es tan profundo como el océano y tan vasto como el cielo.",
+            "Eres el reflejo más puro de lo que es el amor verdadero.",
+            "No hay mayor bendición en mi vida que haberte encontrado.",
+            "En un mundo lleno de sombras, tú eres mi luz.",
+            "El amor que siento por ti no conoce límites ni fronteras.",
+            "Lo que siento por ti es más que amor, es devoción.",
+            "Eres el milagro que nunca supe que necesitaba.",
+            "Si mi corazón tuviera voz, gritaría tu nombre en cada latido.",
+            "Amarte es la decisión más fácil y acertada de mi vida.",
+            "Eres el eco que resuena en cada rincón de mi ser.",
+            "Nuestro amor es la fuerza que mueve mi universo.",
+            "Te amo con la libertad con la que una mujer elige quedarse.",
+            "No te amo por lo que eres, sino por cómo soy yo cuando estoy contigo.",
+            "El amor no se mira, se siente. Y aún más cuando está junto a ti.",
+            "Te amo más de lo que las palabras pueden expresar.",
+            "Eres el motor que impulsa cada uno de mis días.",
+            "No hay nadie más que tú en mi corazón.",
+            "Eres el amor que siempre soñé y mucho más.",
+            "Contigo cada día es una nueva aventura.",
+            "Eres la razón por la que mi corazón late más fuerte.",
+            "Amarte es la experiencia más bonita que he vivido.",
+            "No importa el futuro, lo importante es que estemos juntos.",
+            "Mi corazón es tuyo desde el primer día que te vi.",
+            "Todo lo que soy te lo debo a ti y a nuestro amor.",
+            "Eres la parte más bonita de mi vida.",
+            "Contigo el amor es más fácil de entender.",
+            "Eres mi todo, mi vida y mi amor.",
+            "Nunca dejaré de luchar por ti y por nosotros.",
+            "El sol, la luna, las estrellas… Todo pierde sentido ante el cielo de tus ojos.",
+            "Debes permitirme decirte cuánto te admiro y te amo.",
+            "¿No es la descortesía con todos los demás, la esencia misma del amor?",
+            "Mi estrategia es que un día cualquiera, no sé cómo ni sé con qué pretexto por fin me necesites.",
+            "Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.",
+            "Te amo por encima de todo aquello que no podemos ver, por encima de lo que no podemos conocer.",
+            "Te tomo la palabra. Llámame solo amor, será un bautismo, desde hoy nunca más seré Romeo.",
+            "Me estás enseñando a amar, yo no sabía. Amar es no pedir, es dar. Mi alma, vacía.",
+            "El amor sólo descansa cuando muere. Un amor vivo es un amor en conflicto.",
+            "Hay que saber que no existe país sobre la tierra donde el amor no haya convertido a los amantes en poetas.",
+            "¿Sabe lo mejor de los corazones rotos? Que solo pueden romperse de verdad una vez. Lo demás son rasguños.",
+            "El amor puede esperar aún cuando la razón desespera.",
+            "Descubrí, en fin, que el amor no es un estado del alma sino un signo del zodiaco.",
+            "Tan herido estoy que no puedo cruzar el umbral de mi tristeza. El peso del amor me aplasta.",
+            "El que amas y el que te ama nunca son la misma persona.",
+            "Podrá la muerte cubrirme con su fúnebre crespón; pero jamás en mí podrá apagarse la llama de tu amor.",
+            "Si tú me recuerdas, no me importará que el resto del mundo me olvide.",
+            "Te quiero como para ir contigo a los lugares que más frecuento y contarte que ahí es donde me siento a pensar en ti.",
+            "Yo te quiero para siempre, pero siempre es hoy.",
+            "Yo no puedo tenerte ni dejarte, ni sé por qué, al dejarte o al tenerte, se encuentra un no sé qué para quererte y muchos sí sé qué para olvidarte.",
+            "No soporto la idea de que el universo tenga que destruirse cada vez que te marches.",
+            "Y nada tenía de malo, y nada tenía de raro que se me hubiera roto el corazón de tanto usarlo.",
+            "Unos lloran con lágrimas, otros con pensamientos.",
+            "Escondí tan bien mis más profundos sentimientos, que olvidé dónde los había guardado.",
+            "Quiero ser lo que tú eres, ver lo que tú ves, amar lo que tú amas. Tú eres mi amor y mi vida siempre.",
+            "Donde uno no puede amar más, debe pasar de largo.",
+            "Fuiste, eres y siempre serás mi más bonita casualidad.",
+            "Y te elegiría a ti; en cien vidas, en cien mundos, en cualquier versión de la realidad, te encontraría y te elegiría.",
+            "Eres la respuesta a todas mis plegarias: eres una canción, un sueño, un susurro.",
+            "Si vives hasta los cien años, quiero vivir hasta los cien años menos un día para no tener que vivir sin ti.",
+            "Tu amor es de las pocas cosas en esta vida que me hacen vibrar.",
+            "Estando solo me río y sé que eso es por amor.",
+            "Si me preguntan por qué me brillan los ojos, les digo que el motivo eres tú.",
+            "No hay nada como el amor que me das.",
+            "Nunca dejes de enloquecerme. Lo necesito.",
+            "Dicen que una mente ocupada no extraña a nadie. Y mírame, con mil cosas por hacer y siempre elijo pensarte.",
+            "¿Por qué tú? Por esa forma en la que acaricias todo lo que no me gusta de mí misma.",
+            "Lo mejor de mi vida es estar en la tuya.",
+            "Me encanta despertarme con un mensaje tuyo.",
+            "Eres la primera persona que conozco con dos corazones. El tuyo y el mío.",
+            "En medio de todo este silencio, tu risa me hace volver a vivir.",
+            "Te quiero para volvernos locos de la risa, ebrios de la nada y pasear sin prisa por las calles, eso sí, tomados de la mano, mejor dicho… del corazón.",
+            "Llevas haciéndome cosquillas en el corazón desde que te conocí.",
+            "Nada más peligroso que una persona que te haga estrenar sentimientos.",
+            "Que nos queramos siempre como el primer día.",
+            "Amor son solo cuatro letras, pero sentirlo es todo un universo.",
+            "Anoche soñé contigo y esta mañana no quería despertar.",
+            "Cuando te vi, mis ojos brillaron igual que cuando vi el mar por primera vez.",
+            "Eres la ilusión de todos mis días.",
+            "Descansa tu cabeza en mi pecho y escucharás a mi corazón decir que eres más que suficiente.",
+            "Lo primero que hago al despertar es pensar en ti.",
+            "Quisiera hacerte una petición, tal vez un poco egoísta: ser tu última petición.",
+            "Yo no le tengo miedo a nada, pero todavía no me explico por qué tiemblo cada vez que te veo.",
+            "Cuando nos ven juntos no sé quién es más afortunado, si yo por llevarte de la mano o ellos por contagiarse de nuestra alegría.",
+            "Entendí que elegirte a ti también es un acto de amor propio.",
+            "Pedí a las estrellas lenguaje más claro, palabras más bellas. Las dulces estrellas me dieron tu vida y encontré en tus ojos la verdad perdida.",
+            "Te amo tan bonito que me asusta, como asusta la grandeza, la belleza y aquello que, de alguna manera, cambia tu vida para siempre. Así.",
+            "No creo en la magia, debe haber algún truco en tus ojos.",
+            "Ojalá nunca dejemos de echarnos de menos y nos busquemos cada vez que la vida nos arañe las entrañas.",
+            "Eres mi primer pensamiento al despertar.",
+            "Mi día mejora solo con un mensaje tuyo.",
+            "No importa la distancia, siempre estás cerca de mi corazón.",
+            "¿Sabías que te pienso a cada momento?",
+            "Te extraño más de lo que las palabras pueden expresar.",
+            "Contigo cada día tiene sentido.",
+            "Tu amor hace que todo valga la pena.",
+            "Si estás bien, yo también lo estoy.",
+            "Me haces feliz con cada palabra que me dices.",
+            "Eres mi razón para sonreír todos los días.",
+            "No hay mensaje que pueda expresar lo que siento por ti.",
+            "Mi corazón late por ti aunque estés lejos.",
+            "Solo tú puedes llenar cada rincón de mi alma.",
+            "No importa el tiempo, siempre te elegiré a ti.",
+            "Eres el mejor capítulo de mi vida.",
+            "Amarte es la mejor parte de mi día.",
+            "Si pudiera escribirte mil veces, te diría que te amo en cada una.",
+            "Eres la razón por la que creo en el amor.",
+            "Solo quería recordarte lo mucho que te amo.",
+            "Tú y yo, una historia que no tiene fin.",
+            "Tu sonrisa es mi momento favorito del día.",
+            "El universo conspira para que estemos juntos.",
+            "No importa lo lejos que estés, siempre estarás en mi corazón.",
+            "Contigo cada día es mejor que el anterior.",
+            "Te amo más de lo que las palabras pueden expresar.",
+            "Eres mi refugio en este mundo tan caótico.",
+            "No importa cuánto tiempo pase, mi amor por ti será eterno.",
+            "Cada vez que sonríes, el mundo se detiene.",
+            "No importa lo que pase, siempre estaré aquí para ti.",
+            "Te amo de una manera que no puedo explicar.",
+            "No necesito más que estar contigo para ser feliz.",
+            "Mi corazón late por ti y solo por ti.",
+            "Eres el motivo por el que me levanto cada mañana.",
+            "Te amo más de lo que el cielo tiene estrellas.",
+            "Contigo todo es mejor, más bonito y más real.",
+            "Mi amor por ti es más grande que el universo.",
+            "No hay nada que pueda separarme de ti.",
+            "Eres mi principio y mi fin. Todo lo que quiero es estar contigo siempre.",
+            "Si pudiera vivir mil vidas, en todas te elegiría a ti.",
+            "Eres el sol en mis días más oscuros.",
+            "Cada día a tu lado es un regalo que no quiero perder.",
+            "No sé qué haría sin ti en mi vida.",
+            "Eres la razón de mi felicidad.",
+            "No importa dónde esté, siempre pensaré en ti.",
+            "Te amo más de lo que podría haber imaginado.",
+            "Eres el sueño que nunca quiero dejar de soñar.",
+            "Contigo todo es posible.",
+            "Te amo más con cada día que pasa.",
+            "Eres mi persona favorita en el mundo.",
+            "Sin ti mi vida no tendría sentido.",
+            "Eres el amor que siempre soñé.",
+            "Todo lo que soy lo soy gracias a ti.",
+            "Eres mi inspiración, mi musa y mi amor.",
+            "Eres mi luz en la oscuridad. Amarte es la mejor decisión que he tomado.",
+            "Eres el amor de mi vida, mi razón de ser.",
+            "No hay un solo día que no piense en ti.",
+            "Mi amor por ti es incondicional y eterno.",
+            "Eres mi mayor alegría, mi mayor bendición.",
+            "Contigo aprendí lo que es el verdadero amor.",
+            "Eres la única que puede hacerme sentir así.",
+            "Te amo más de lo que las palabras pueden expresar.",
+            "Eres la razón por la que sonrío cada día.",
+            "No importa el tiempo ni la distancia, siempre te amaré.",
+            "Cada vez que estoy contigo, me siento completo.",
+            "Eres mi todo, mi vida, mi amor.",
+            "No importa lo que pase, siempre te amaré.",
+            "Eres mi razón de ser, mi luz en la oscuridad. No hay nadie más que tú en mi corazón.",
+            "Te amo más de lo que el cielo tiene estrellas.",
+            "Eres mi mayor alegría, mi mayor bendición.",
+            "Te amo de una manera que no puedo explicar.",
+            "Mi corazón es tuyo desde el primer día que te vi.",
+            "Eres la razón por la que sigo adelante cada día.",
+            "Contigo aprendí lo que es el verdadero amor.",
+            "Te amo más de lo que las palabras pueden expresar.",
+            "No importa dónde esté, siempre pensaré en ti.",
+            "Te amo más de lo que el cielo tiene estrellas.",
+            "Eres mi razón de ser, mi luz en la oscuridad.",
+            "Eres mi lugar favorito al que siempre quiero volver.",
+            "Contigo, todo tiene sentido.",
+            "Te elegí ayer, te elijo hoy y te elegiré siempre.",
+            "Eres mi paz en medio del caos.",
+            "Mi hogar no es un sitio, es una persona: tú.",
+            "Amarte es lo más bonito que me ha pasado.",
+            "Eres mi presente favorito y mi futuro soñado.",
+            "A tu lado, todo es mejor.",
+            "Te amo con todo lo que soy y todo lo que seré.",
+            "Cada día contigo es un regalo que no quiero devolver.",
+            "En tus ojos encontré mi destino.",
+            "No sé qué hice para merecerte, pero ojalá lo siga haciendo.",
+            "Tú y yo, en cualquier parte, es mi plan perfecto.",
+            "Me haces sonreír con el corazón.",
+            "Tu amor es mi refugio más seguro.",
+            "Lo que siento por ti no cabe en palabras.",
+            "Amar es fácil desde que te conocí.",
+            "Solo tú sabes cómo hacer que me sienta en casa con un abrazo.",
+            "El tiempo contigo vuela, pero tus besos lo detienen todo."
+        ];
+
+        // Lógica de Persistencia para no repetir frases
+        function getPhraseIndices() {
+            let indices = localStorage.getItem('indicesCartitas');
+            if (!indices || JSON.parse(indices).length === 0) {
+                // Crear y barajar si no hay frases disponibles
+                indices = Array.from({ length: lovingPhrases.length }, (_, i) => i);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                saveIndices(indices);
+                return indices;
+            }
+            return JSON.parse(indices);
+        }
+
+        function saveIndices(indices) {
+            localStorage.setItem('indicesCartitas', JSON.stringify(indices));
+        }
+
+        function getUnusedRandomPhrase() {
+            let availableIndices = getPhraseIndices();
+            let pickedIndex = availableIndices.pop();
+            saveIndices(availableIndices);
+            return lovingPhrases[pickedIndex];
+        }
+
+        // --- 6. CELEBRACIÓN Y ACTIVACIÓN DEL RETO ---
+        function acceptProposal() {
+            document.getElementById('letterCard').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('letterCard').style.display = 'none';
+                const celebration = document.getElementById('celebrationScreen');
+                celebration.classList.remove('hidden');
+                celebration.classList.add('block'); 
+                createConfetti(150);
+            }, 500);
+        }
+
+        // Lógica del Botón "Leer Cartita"
+        function readLoveNote() {
+            const phrase = getUnusedRandomPhrase();
+            document.getElementById('phraseText').innerText = phrase;
+            document.getElementById('lovePhraseModal').className = "show";
+        }
+
+        function closeLoveNote() {
+            document.getElementById('lovePhraseModal').className = "";
+        }
+
+        // --- 7. FONDO Y CONFETI ---
+        function createBackgroundBokeh() {
+            const container = document.getElementById('bokehContainer');
+            const symbols = ['❤️', '💗', '💕'];
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bokeh-heart';
+                heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${10 + Math.random() * 15}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.fontSize = `${3 + Math.random() * 4}rem`;
+                container.appendChild(heart);
+            }
+        }
+        
+        function createConfetti(amount) {
+            const colors = ['#d90429', '#ffb3c6', '#ffd700', '#fff'];
+            for (let i = 0; i < amount; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'fixed';
+                conf.style.top = '50%';
+                conf.style.left = '50%';
+                conf.style.width = '12px';
+                conf.style.height = '12px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                if(Math.random() > 0.5) conf.style.borderRadius = '50%';
+                
+                conf.style.zIndex = '1000';
+                document.body.appendChild(conf);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 300 + 100;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+
+                conf.animate([
+                    { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty}px) scale(0) rotate(${Math.random()*720}deg)`, opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)',
+                }).onfinish = () => conf.remove();
+            }
+        }
+
+        createBackgroundBokeh();
+    </script>
+</body>
+</html>
